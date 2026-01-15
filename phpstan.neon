@@ -1,0 +1,20 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app/
+
+    excludePaths:
+        analyseAndScan:
+            - app/Http/Controllers/Admin/
+
+    level: 7
+
+    ignoreErrors:
+        -
+            message: '#Method (App\\Http\\Controllers\\\w+Controller::\w+\(\)) has no return type specified\.#'
+            path: app/Http/Controllers/*
+        -
+            identifier: missingType.iterableValue

@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.page-content h1 {
+    text-transform: none;
+    font-size: 2em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+}
+.page-content h2 {
+    font-size: 1.755em;
+    line-height: 1.2;
+    border-top: 1px solid var(--borderColor);
+    margin-top: 1.6em;
+    padding-top: 1em;
+    margin-bottom: 0.93em;
+}
+
+.page-content h3 {
+    font-size: 1.5em;
+    line-height: 1.2;
+    margin-top: 1em;
+    margin-bottom: 0.9em;
+}
+
+.page-content h4 {
+    font-size: 1.25em;
+    line-height: 1.2;
+    margin-top: 1em;
+    margin-bottom: 0.9em;
+}
+
+.page-content ol {
+    list-style-type: decimal;
+}
+
+.page-content ul {
+    list-style-type: initial;
+}
+
+.page-content ol,
+.page-content ul {
+    list-style-position: outside;
+    margin-left: 2em;
+    font-size: 1rem;
+    line-height: 1.75rem;
+    margin-bottom: 1em;
+}
+
+.page-content ol li ol,
+.page-content ul li ol {
+    margin-left: 1em;
+}
+
+.page-content p {
+    line-height: 1.75rem;
+    font-size: 1rem;
+    margin-bottom: 1em;
+}
+
+.page-content p:empty {
+    display: none;
+}
+
+.page-content p br {
+    line-height: 1;
+}
+
+.page-content b,
+.page-content strong {
+    color: #000;
+}

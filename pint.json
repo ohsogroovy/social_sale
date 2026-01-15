@@ -1,0 +1,10 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "ordered_imports": {
+            "sort_algorithm": "length"
+        },
+        "single_trait_insert_per_statement": false,
+        "no_unused_imports": true
+    }
+}
