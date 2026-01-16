@@ -95,3 +95,7 @@ Route::get('/shopify/subscribe-webhooks', function (Shopify $shopify) {
 });
 
 require __DIR__.'/auth.php';
+
+// Facebook Webhook Endpoint
+use App\Http\Controllers\FacebookWebhookController;
+Route::match(['get', 'post'], '/webhook/facebook', [FacebookWebhookController::class, 'handle']);
