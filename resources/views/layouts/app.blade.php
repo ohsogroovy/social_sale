@@ -38,6 +38,9 @@
                 {{ $slot }}
             @endisset
             </main>
+
+    <!-- Alpine.js for dropdowns -->
+    <script src="//unpkg.com/alpinejs" defer></script>
     </div>
     </body>
 </html>

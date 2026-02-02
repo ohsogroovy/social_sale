@@ -11,6 +11,7 @@ use App\Http\Controllers\ImportCsvController;
 use App\Http\Controllers\FacebookOAuthController;
 use App\Http\Controllers\FacebookStreamController;
 use App\Http\Controllers\ShopifyWebhookController;
+use App\Http\Controllers\FacebookWebhookController;
 
 Route::get('/', function () {
     $user = \App\Models\User::first();
@@ -96,6 +97,9 @@ Route::get('/shopify/subscribe-webhooks', function (Shopify $shopify) {
 
 require __DIR__.'/auth.php';
 
-// Facebook Webhook Endpoint
-use App\Http\Controllers\FacebookWebhookController;
-Route::match(['get', 'post'], '/webhook/facebook', [FacebookWebhookController::class, 'handle']);
+// Facebook Webhook Endpoint (must be public, outside middleware)
+Route::post('/facebook/webhook', [FacebookWebhookController::class, 'handle']);
+Route::get('/facebook/webhook', [FacebookWebhookController::class, 'verify']);
+Route::get('/test', function () {
+    return 'It works!';
+});

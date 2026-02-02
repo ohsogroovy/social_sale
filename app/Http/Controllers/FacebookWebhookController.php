@@ -7,13 +7,13 @@ use App\Handlers\HandlePostWebhook;
 use App\Handlers\HandleCommentsWebhook;
 use App\Handlers\Facebook\MessageHandler;
 
-
 class FacebookWebhookController extends Controller
 {
     public function handle(Request $request)
     {
         // Handle Facebook webhook verification (GET)
         if ($request->isMethod('get')) {
+            \logger()->info('Facebook Webhook Verification Request', $request->all());
             $mode = $request->input('hub_mode');
             $token = $request->input('hub_verify_token');
             $challenge = $request->input('hub_challenge');
@@ -41,6 +41,15 @@ class FacebookWebhookController extends Controller
         }
 
         return response('EVENT_RECEIVED', 200);
+    }
+
+    public function verify(Request $request)
+    {
+        $verify_token = env('FB_VERIFY_TOKEN');
+        if ($request->input('hub_verify_token') === $verify_token) {
+            return response($request->input('hub_challenge'), 200);
+        }
+        return response('Error, invalid token', 403);
     }
 
     protected function handleChange(array $change)
