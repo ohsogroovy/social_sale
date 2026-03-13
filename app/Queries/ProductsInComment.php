@@ -24,11 +24,22 @@ class ProductsInComment
 
         $messageLines = explode(PHP_EOL, $message);
         $messageText = implode(' ', $messageLines);
+
+        $words = preg_split('/\s+/', $messageText);
+        $words = array_map(fn ($word) => preg_replace('/[^A-Za-z0-9\-]/', '', $word), $words);
+        $words = array_filter($words);
+
+        // Debug log: log the extracted words from the comment
+        \Log::info('ProductsInComment: Extracted words from comment', [
+            'original_message' => $message,
+            'words' => $words,
+        ]);
+
         $found = Product::query()
-            ->whereHas('tags', function ($query) use ($messageText) {
-                $words = explode(' ', $messageText);
-                $words = array_map(fn ($word) => preg_replace('/[^A-Za-z0-9\-]/', '', $word), $words);
-                $query->whereIn('name', $words);
+            ->whereHas('tags', function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhereRaw('LOWER(name) = ?', [strtolower($word)]);
+                }
             });
 
         return $found;

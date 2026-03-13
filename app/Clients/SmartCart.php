@@ -36,7 +36,21 @@ class SmartCart
 
     public function reserveProduct(int $customerId, int $productId): array
     {
-        return $this->http->post("/customer/{$customerId}/reserve-product", ['product_id' => $productId])->json();
+        $url = "/customer/{$customerId}/reserve-product";
+        $payload = ['product_id' => $productId];
+        \Log::info('SmartCart reserveProduct request', [
+            'url' => $url,
+            'payload' => $payload,
+        ]);
+
+        $response = $this->http->post($url, $payload);
+
+        \Log::info('SmartCart reserveProduct response', [
+            'status' => $response->status(),
+            'body' => $response->body(),
+        ]);
+
+        return $response->json();
     }
 
     public function addProductToWaitList(int $customerId, int $productId): array

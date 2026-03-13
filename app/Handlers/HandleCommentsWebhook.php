@@ -7,8 +7,12 @@ use App\Events\CommentPosted;
 
 class HandleCommentsWebhook
 {
+
     public function execute(array $change): void
     {
+        \Log::info('HandleCommentsWebhook: Received comment webhook', [
+            'change' => $change
+        ]);
         $postId = $change['value']['post_id'] ?? null;
         $parentId = $change['value']['parent_id'] ?? null;
         $commentId = $change['value']['comment_id'];
