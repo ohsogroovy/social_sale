@@ -14,6 +14,12 @@ class AddProduct
         $imageUrl = \reset($product['images'])['src'] ?? null;
         $variants = $product['variants'];
 
+        // Debug log: Log product ID and tags during sync
+        logger()->info('Syncing product', [
+            'shopify_id' => $productId,
+            'tags' => $product['tags'],
+        ]);
+
         $productContainTriggerTag = \is_int(\strpos($product['tags'], 'trigger-'));
         $hasValidVariant = \array_filter($variants, fn ($variant) => ! empty($variant['sku'] ?? ''));
         if (! $productContainTriggerTag && ! $hasValidVariant) {

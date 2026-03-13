@@ -19,10 +19,20 @@ class AddTags
         $systemTagName = $systemTag ? $systemTag->name : null;
         $hasSystemTag = false;
         foreach ($tags as $tag) {
+            // Debug log: Log each tag being processed
+            logger()->info('Processing tag for product', [
+                'product_id' => $product->id,
+                'raw_tag' => $tag,
+            ]);
             if (\str_starts_with($tag, 'trigger-') == false) {
                 continue;
             }
             $tagName = \trim(\substr($tag, 8));
+            // Debug log: Log tagName after stripping prefix
+            logger()->info('Saving tagName for product', [
+                'product_id' => $product->id,
+                'tagName' => $tagName,
+            ]);
             if (empty($tagName)) {
                 continue;
             }

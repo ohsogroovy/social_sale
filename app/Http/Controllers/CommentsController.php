@@ -16,8 +16,8 @@ class CommentsController extends Controller
                         $query->where('post_type', '!=', 'live');
                     });
             })
-            ->with('privateMessage:comment_id')
-            ->select('id', 'commenter', 'post_type', 'post_link', 'facebook_id', 'parent_id', 'message', 'facebook_created_at')
+            ->with(['privateMessage:comment_id', 'post.product.tags'])
+            ->select('id', 'commenter', 'post_type', 'post_link', 'facebook_id', 'parent_id', 'message', 'facebook_created_at', 'post_id')
             ->orderBy('facebook_created_at', 'desc')
             ->paginate();
 

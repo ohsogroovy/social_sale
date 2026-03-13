@@ -23,6 +23,15 @@ export default function Show() {
         if (comments?.data.length > 0) {
             const activity_array = [];
             comments.data.map((comment) => {
+                // Extract tags from nested structure: comment.post?.product?.tags
+                let tags = [];
+                if (
+                    comment.post &&
+                    comment.post.product &&
+                    Array.isArray(comment.post.product.tags)
+                ) {
+                    tags = comment.post.product.tags.map((tag) => tag.name);
+                }
                 activity_array.push({
                     activity_id: comment.id,
                     user: comment.commenter,
@@ -31,6 +40,7 @@ export default function Show() {
                     type: comment.post_type,
                     status: comment.private_message ? true : false,
                     date: comment.facebook_created_at,
+                    tags: tags,
                 });
             });
             setActivity(activity_array);
@@ -68,6 +78,17 @@ export default function Show() {
                 </Anchor>
             </Table.Td>
             <Table.Td>{element.type}</Table.Td>
+            <Table.Td>
+                {element.tags && element.tags.length > 0 ? (
+                    <Group gap={4}>
+                        {element.tags.map((tag, idx) => (
+                            <Badge key={idx} color="blue" size="sm">{tag}</Badge>
+                        ))}
+                    </Group>
+                ) : (
+                    <Badge color="gray">No Tag</Badge>
+                )}
+            </Table.Td>
             <Table.Td>
                 {element.status ? (
                     <Badge color="green">Message Sent</Badge>
@@ -123,6 +144,11 @@ export default function Show() {
                                             <Table.Th>
                                                 <p className="font-bolder uppercase">
                                                     Type
+                                                </p>
+                                            </Table.Th>
+                                            <Table.Th>
+                                                <p className="font-bolder uppercase">
+                                                    Tags
                                                 </p>
                                             </Table.Th>
                                             <Table.Th>
